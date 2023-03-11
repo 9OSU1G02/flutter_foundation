@@ -1,34 +1,30 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class RandomizedPage extends StatefulWidget {
-  const RandomizedPage({
+class RandomizedPage extends HookWidget {
+  RandomizedPage({
     super.key,
     required this.minimum,
     required this.maximum,
   });
   final int minimum;
   final int maximum;
-  @override
-  State<RandomizedPage> createState() => _RandomizedPageState();
-}
 
-class _RandomizedPageState extends State<RandomizedPage> {
-  int? _generatedNumber;
+  
   final randomGenerator = Random();
   @override
   Widget build(BuildContext context) {
+    final generatedNumber = useState<int?>(null);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Randomized Page"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Center(
+        child: Center( 
           child: Text(
-            _generatedNumber?.toString() ??
-                "Press the button to generate a number",
+            generatedNumber.value == null ? "Tap Generate" : generatedNumber.value.toString(),
             style: const TextStyle(fontSize: 30),
           ),
         ),
@@ -36,11 +32,8 @@ class _RandomizedPageState extends State<RandomizedPage> {
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate"),
         onPressed: () {
-          setState(() {
-            _generatedNumber =
-                randomGenerator.nextInt(widget.maximum - widget.minimum) +
-                    widget.minimum;
-          });
+          generatedNumber.value =
+              randomGenerator.nextInt(maximum - minimum) + minimum;
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

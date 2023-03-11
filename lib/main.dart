@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RangeSelectorPage(title: 'Flutter De mo Home Page'),
+      home: RangeSelectorPage(title: 'Flutter De mo Home Page'),
     );
   }
 }
