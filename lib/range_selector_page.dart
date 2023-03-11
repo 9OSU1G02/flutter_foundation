@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_foundation/randomized_page.dart';
 import 'package:flutter_foundation/range_selector_form.dart';
-import 'package:provider/provider.dart';
 
 class RangeSelectorPage extends StatelessWidget {
   RangeSelectorPage({super.key, required this.title});
@@ -20,7 +19,7 @@ class RangeSelectorPage extends StatelessWidget {
             if (formKey.currentState?.validate() == true) {
               formKey.currentState?.save();
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => RandomizedPage()));
+                  MaterialPageRoute(builder: (context) => const RandomizedPage()));
             }
           },
           child: const Icon(Icons.arrow_forward)),

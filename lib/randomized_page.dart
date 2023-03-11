@@ -1,13 +1,13 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_foundation/randomized_change_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'main.dart';
 
-class RandomizedPage extends StatelessWidget {
+class RandomizedPage extends ConsumerWidget {
   const RandomizedPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final randomized = ref.watch(randomizedProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Randomized Page"),
@@ -15,21 +15,16 @@ class RandomizedPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
-          child: Consumer<RandomizedChangeNotifier>(
-              builder: (context, notifier, child) {
-            return Text(
-              notifier.generatedNumber == null
-                  ? "Tap Generate"
-                  : notifier.generatedNumber.toString(),
-              style: const TextStyle(fontSize: 30),
-            );
-          }),
-        ),
+          child: Text(
+            randomized.generatedNumber?.toString() ?? "No number generated",
+            style: const TextStyle(fontSize: 24),
+          ),
+        )
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate"),
         onPressed: () {
-          context.read<RandomizedChangeNotifier>().generateRandomNumber();
+          ref.read(randomizedProvider).generateRandomNumber();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

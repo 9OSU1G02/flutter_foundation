@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_foundation/randomized_change_notifier.dart';
 import 'package:flutter_foundation/range_selector_page.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   runApp(const MyApp());
 }
+
+final randomizedProvider = ChangeNotifierProvider((ref) => RandomizedChangeNotifier());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,8 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RandomizedChangeNotifier(),
+    return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Randomized',

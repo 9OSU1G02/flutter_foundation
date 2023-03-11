@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_foundation/randomized_change_notifier.dart';
 import 'package:flutter_foundation/range_selector_page.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'main.dart';
 
 typedef IntValueSetter = void Function(int value);
 
-class RangeSelectorForm extends StatelessWidget {
+class RangeSelectorForm extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const RangeSelectorForm(
@@ -13,7 +13,7 @@ class RangeSelectorForm extends StatelessWidget {
       required this.formKey});
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Form(
       key: formKey,
       child: Padding(
@@ -23,12 +23,12 @@ class RangeSelectorForm extends StatelessWidget {
           children: [
             RangeSelectorTextFormField(
               labelText: 'Minimum',
-              intValueSetter: (value) => context.read<RandomizedChangeNotifier>().minimum = value,
+              intValueSetter: (value) => ref.read(randomizedProvider).minimum = value,
             ),
             const SizedBox(height: 12),
             RangeSelectorTextFormField(
               labelText: 'Maximum',
-              intValueSetter: (value) => context.read<RandomizedChangeNotifier>().maximum = value,
+              intValueSetter: (value) => ref.read(randomizedProvider).maximum = value,
             )
           ],
         ),
