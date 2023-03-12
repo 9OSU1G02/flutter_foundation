@@ -1,13 +1,35 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'randomized_change_notifier.freezed.dart';
 
-class RandomizedChangeNotifier extends ChangeNotifier {
+@freezed
+class RandomizedState with _$RandomizedState {
+  const RandomizedState._();
+  const factory RandomizedState({
+    int? generatedNumber,
+    @Default(0) int minimum,
+    @Default(0) int maximum,
+  }) = _RandomizedState;
+}
+
+class RandomizedStateNotifier extends StateNotifier<RandomizedState> {
+  RandomizedStateNotifier() : super(const RandomizedState());
   final _randomGenerator = Random();
-  int? _generatedNumber;
-  int? get generatedNumber => _generatedNumber;
-  int minimum = 0, maximum = 0;
+
   void generateRandomNumber() {
-    _generatedNumber = _randomGenerator.nextInt(maximum - minimum) + minimum;
-    notifyListeners();
+    state = state.copyWith(
+      generatedNumber: _randomGenerator.nextInt(state.maximum - state.minimum) +
+          state.minimum,
+    );
+  }
+
+  void setMinimum(int value) {
+    state = state.copyWith(minimum: value);
+  }
+
+  void setMaximum(int value) {
+    state = state.copyWith(maximum: value);
   }
 }

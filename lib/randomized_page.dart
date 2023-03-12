@@ -24,7 +24,7 @@ class RandomizedPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate"),
         onPressed: () {
-          ref.read(randomizedProvider).generateRandomNumber();
+          ref.read(randomizedProvider.notifier).generateRandomNumber();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

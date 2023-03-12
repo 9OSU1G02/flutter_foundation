@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_foundation/randomized_change_notifier.dart';
 import 'package:flutter_foundation/range_selector_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
-final randomizedProvider = ChangeNotifierProvider((ref) => RandomizedChangeNotifier());
+final randomizedProvider =
+    StateNotifierProvider<RandomizedStateNotifier, RandomizedState>(
+        (ref) => RandomizedStateNotifier());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
